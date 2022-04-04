@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Arrow from "./Arrow";
 import SongInfo from "../../_models/SongInfo";
-import FormatColumnName from '../../_utils/FormatColumnName'
+import FormatColumnName from "../../_utils/FormatColumnName";
 
 type colPros = {
   songs: SongInfo[];
@@ -14,25 +14,21 @@ type SortOrder = "ASC" | "DESC";
 function Header(props: colPros) {
   const [sortKey, setSortKey] = useState("song");
 
-
   //Sort function here..
-  /*   const compare = (column:String, orderBy:String) => {
+  const compare = (col:string, orderBy: string) => {
     return (a:SongInfo, b:SongInfo) => {
-      if (a[column] < b[column]) {
-        return orderBy === 'descending' ? 1 : -1;
+      if (a[col] < b[col]) {
+        return orderBy === "descending" ? 1 : -1;
       }
-      if (a[column] > b[column]) {
-        return orderBy === 'descending' ? -1 : 1;
+      if (a[col] > b[col]) {
+        return orderBy === "descending" ? -1 : 1;
       }
       return 0;
-    }};
-     const sortAndSetSongs = () => {
-    //const sortedSongs = [...props.songs].sort(compare(column, orderBy));
-    props.setSongs((prevSongs) => sortedSongs);
+    };
   };
- */
-  const updateSortType = (col: string) => {
-    setSortKey(col);
+  const sortAndSetSongs = (col:string, ordering:string) => {
+    const sortedSongs = [...props.songs].sort(compare(col, ordering));
+    props.setSongs((prevSongs) => sortedSongs);
   };
 
   //Handler for arrow Click here..
@@ -42,7 +38,7 @@ function Header(props: colPros) {
     return (
       <div className="header_cell" key={index}>
         {FormatColumnName(col)}
-        <div className="arrow_layout">
+        <div className="arrow_layout" onClick={() => sortAndSetSongs(col, "ASC")}>
           <Arrow rotate="rotate" />
         </div>
         <div className="arrow_layout">
